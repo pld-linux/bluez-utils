@@ -21,6 +21,7 @@ BuildRequires:	bluez-libs-devel >= 2.10
 BuildRequires:	dbus-devel
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
+BuildRequires:	rpmbuild(macros) >= 1.164
 PreReq:		rc-scripts
 Requires:	bluez-libs >= 2.10
 Obsoletes:	blues-pan
