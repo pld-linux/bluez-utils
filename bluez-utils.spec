@@ -1,3 +1,4 @@
+# TODO: PLDify init script
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
