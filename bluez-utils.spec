@@ -1,28 +1,29 @@
 # TODO:
 # - check init script, add support for rfcomm bind on startup
+#
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.6
+Version:	2.7
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	c8fa21bec5f226f3af8a36d281d77202
+# Source0-md5:	5b67e008efa785175cdbc3c8dcdebab2
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-etc_dir.patch
-Patch2:		%{name}-sdp.patch
+Patch2:		%{name}-cups.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.6
+BuildRequires:	bluez-libs-devel >= 2.7
 BuildRequires:	libtool
 PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
-Requires:	bluez-libs >= 2.6
+Requires:	bluez-libs >= 2.7
 Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -49,6 +50,19 @@ Narzêdzia Bluetooth (bluez-utils):
  - skrypty startowe (PLD)
  - pliki konfiguracji PCMCIA
 
+%package -n cups-backend-bluetooth
+Summary:	Bluetooth backend for CUPS
+Summary(pl):	Backend Bluetooth dla CUPS-a
+Group:		Applications/Printing
+Requires:	bluez-libs >= 2.7
+Requires:	cups
+
+%description -n cups-backend-bluetooth
+Bluetooth backend for CUPS.
+
+%description -n cups-backend-bluetooth -l pl
+Backend Bluetooth dla CUPS-a.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -66,7 +80,8 @@ mv -f hcid.conf.tmp hcid/hcid.conf
 %{__autoconf}
 %{__automake}
 %configure \
-	--enable-pcmcia
+	--enable-pcmcia \
+	--with-cups=/usr
 %{__make}
 
 %install
@@ -110,3 +125,7 @@ fi
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/bluetooth/*
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth
+
+%files -n cups-backend-bluetooth
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_prefix}/lib/cups/backend/bluetooth
