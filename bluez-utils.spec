@@ -23,6 +23,7 @@ BuildRequires:	bluez-libs-devel >= 2.7
 BuildRequires:	libtool
 PreReq:		rc-scripts
 Requires:	bluez-libs >= 2.7
+Obsoletes:	blues-pan
 Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -66,7 +67,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Init script for Bluetooth subsystem
 Summary(pl):	Skrypt init dla podsystemu Bluetooth
 Group:		Applications/System
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
 
 %description init
