@@ -1,0 +1,16 @@
+diff -Nru bluez-utils-2.2/rfcomm/parser.y bluez-utils-2.2.new/rfcomm/parser.y
+--- bluez-utils-2.2/rfcomm/parser.y	Thu Oct 31 10:09:48 2002
++++ bluez-utils-2.2.new/rfcomm/parser.y	Sun Mar 23 18:18:14 2003
+@@ -147,7 +147,11 @@
+ 	if (filename) {
+ 		snprintf(file, MAXPATHLEN,  "%s", filename);
+ 	} else {
+-		snprintf(file, MAXPATHLEN, "%s/.bluetooth/rfcomm.conf", getenv("HOME"));
++		char *config_dir = getenv("CONFIG_DIR");
++		if (config_dir)
++			snprintf(file, MAXPATHLEN, "%s/bluetooth/rfcomm.conf", config_dir);
++		else
++			snprintf(file, MAXPATHLEN, "%s/.bluetooth/rfcomm.conf", getenv("HOME"));
+ 
+ 		if ((getuid() == 0) || (access(file, R_OK) < 0))
+ 			snprintf(file, MAXPATHLEN, "/etc/bluetooth/rfcomm.conf");
