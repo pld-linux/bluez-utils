@@ -1,4 +1,4 @@
-# TODO: 
+# TODO:
 # - check init script, add support for rfcomm bind on startup
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
@@ -43,7 +43,7 @@ Narzêdzia Bluetooth (bluez-utils):
  - l2ping
  - skrypty startowe (PLD)
  - pliki konfiguracji PCMCIA
- 
+
 %prep
 %setup -q
 %patch0 -p1
