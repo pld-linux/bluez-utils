@@ -62,7 +62,6 @@ case "$1" in
 		# show "Stopping %s service" Bluetooth
 		msg_stopping Bluetooth
 		killproc hcid
-		RETVAL=$?
 		if [ "$UART_CONF" != "no" ]; then
 			killproc hciattach >/dev/null 2>&1
 		fi
@@ -85,13 +84,13 @@ case "$1" in
 		RETVAL=$?
 	else
 		# show "%s service is not running." Bluetooth
-		msg_not_running Bluetooth
-		RETVAL=7
+		msg_not_running Bluetooth >&2
+		exit 7
 	fi
 	;;
   status)
 	status hcid
-	RETVAL=$?
+	exit $?
 	;;
   *)
 	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
