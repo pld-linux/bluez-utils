@@ -6,9 +6,9 @@ diff -Nru bluez-utils-2.2/rfcomm/parser.y bluez-utils-2.2.new/rfcomm/parser.y
  		snprintf(file, MAXPATHLEN,  "%s", filename);
  	} else {
 -		snprintf(file, MAXPATHLEN, "%s/.bluetooth/rfcomm.conf", getenv("HOME"));
-+		char *etc_dir = getenv("ETC_DIR");
++		char *etc_dir = getenv("HOME_ETC");
 +		if (etc_dir)
-+			snprintf(file, MAXPATHLEN, "%s/bluetooth/rfcomm.conf", etc_dir);
++			snprintf(file, MAXPATHLEN, "%s/.bluetooth/rfcomm.conf", etc_dir);
 +		else
 +			snprintf(file, MAXPATHLEN, "%s/.bluetooth/rfcomm.conf", getenv("HOME"));
  
