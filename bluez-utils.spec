@@ -3,22 +3,27 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.4
+Version:	2.6
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	bf5beebfaf0c9106764f191b02eba417
+# Source0-md5:	c8fa21bec5f226f3af8a36d281d77202
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-opt.patch
 Patch1:		%{name}-etc_dir.patch
+Patch2:		%{name}-sdp.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	bluez-libs-devel >= 2.0
+BuildRequires:	bison
+BuildRequires:	bluez-libs-devel >= 2.6
 BuildRequires:	libtool
+PreReq:		rc-scripts
 Requires(post,preun):	/sbin/chkconfig
+Requires:	bluez-libs >= 2.6
+Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,6 +53,7 @@ Narzêdzia Bluetooth (bluez-utils):
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # fix path (default prefix was /)
 sed -e "s@pin_helper.*bluepin;@pin_helper %{_bindir}/bluepin;@" \
@@ -68,9 +74,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	confdir=%{_sysconfdir}/bluetooth \
-	mandir=%{_mandir}
+	DESTDIR=$RPM_BUILD_ROOT
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
