@@ -1,25 +1,25 @@
-Summary: Bluetooth utilities 
-Name: bluez-utils
-Version: 2.2
-Release: 2
-Copyright: GPL
-Group: Applications/System
-Source: http://bluez.sourceforge.net/%{name}-%{version}.tar.gz
-Patch: bluez-utils-build.patch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-URL: http://bluez.sourceforge.net
-BuildRequires: bluez-libs-devel >= 2.0
-ExcludeArch: s390 s390x
+Summary:	Bluetooth utilities
+Name:		bluez-utils
+Version:	2.2
+Release:	2
+License:	GPL
+Group:		Applications/System
+Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
+#Patch0:		%{name}-build.patch
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+URL:		http://bluez.sourceforge.net
+BuildRequires:	bluez-libs-devel >= 2.0
+ExcludeArch:	s390 s390x
 
 %description
 Bluetooth utilities (bluez-utils):
-	- hcitool
-	- hciattach
-	- hciconfig
-	- hcid
-	- l2ping
-	- start scripts (RedHat)
-	- pcmcia configuration files
+ - hcitool
+ - hciattach
+ - hciconfig
+ - hcid
+ - l2ping
+ - start scripts (RedHat)
+ - pcmcia configuration files
 
 The BLUETOOTH trademarks are owned by Bluetooth SIG, Inc., U.S.A.
 
@@ -28,40 +28,27 @@ The BLUETOOTH trademarks are owned by Bluetooth SIG, Inc., U.S.A.
 rm -rf $RPM_BUILD_ROOT
 
 %setup -q
-%patch -p1
+#%patch -p1
 
 %build
-%configure --with-bluez-libs=%{_libdir}
-make
+%configure2_13 --with-bluez-libs=%{_libdir}
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-, root, root)
+%defattr(644,root,root,755)
 %doc AUTHORS COPYING INSTALL ChangeLog NEWS README
 /etc/rc.d/init.d/bluetooth
-%{_bindir}/*
-%{_sbindir}/*
+%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man*/*
 %dir %{_sysconfdir}/bluetooth/
 %config %{_sysconfdir}/bluetooth/*
 %config %{_sysconfdir}/pcmcia/bluetooth.conf
 %config %{_sysconfdir}/pcmcia/bluetooth
-
-%changelog
-* Wed Jan 22 2003 Tim Powers <timp@redhat.com>
-- rebuilt
-
-* Sun Jan 19 2003 Matt Wilson <msw@redhat.com> 2.2-1
-- configure with --with-bluez-libs=%%{_libdir}
-
-* Fri Jan 17 2003 Bill Nottingham <notting@redhat.com> 2.2-1
-- adapt upstream rpm
-
-* Tue Aug 13 2002 Sebastian Frankfurt <sf@infesto.de>
-- Initial RPM
