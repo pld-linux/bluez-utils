@@ -25,6 +25,7 @@ PreReq:		rc-scripts
 Requires:	bluez-libs >= 2.10
 Obsoletes:	blues-pan
 Obsoletes:	bluez-sdp
+Conflicts:	bluez-bluefw
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
