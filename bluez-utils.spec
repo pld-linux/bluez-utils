@@ -8,6 +8,7 @@ Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
+# Source0-md5:	dcc22cb0b24debd5e65f9234d9ba7685
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-opt.patch
