@@ -1,8 +1,8 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.2
-Release:	3
+Version:	2.3
+Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
