@@ -16,7 +16,7 @@ UART_CONF="/etc/bluetooth/uart"
 [ -f /etc/sysconfig/bluetooth ] && . /etc/sysconfig/bluetooth
 
 if [ "$UART_CONF" != "no" -a ! -f "$UART_CONF" ]; then
-    UART_CONF="no"
+	UART_CONF="no"
 fi
 
 # See how we were called.
@@ -27,24 +27,24 @@ case "$1" in
 		# show "Starting %s service" Bluetooth
 		msg_starting Bluetooth
 		if [ -f /usr/sbin/hciattach -a "$UART_CONF" != "no" ]; then
-		    grep -v '^#' $UART_CONF | while read i; do
-		    	/usr/sbin/hciattach $i
-		    done
+			grep -v '^#' $UART_CONF | while read i; do
+				/usr/sbin/hciattach $i
+			done
 		fi
 		daemon /usr/sbin/hcid -f /etc/bluetooth/hcid.conf
 		RETVAL=$?
 		if [ $RETVAL -ne 0 ]; then
-		    killproc hciattach >/dev/null 2>&1
+			killproc hciattach >/dev/null 2>&1
 		elif [ -x /usr/sbin/sdpd ]; then
-		    msg_starting "Bluetooth SDP"
-		    daemon /usr/sbin/sdpd
-		    RETVAL=$?
-		    if [ $RETVAL -ne 0 ]; then
-			killproc hcid >/dev/null 2>&1
-			if [ "$UART_CONF" != "no" ]; then
-			    killproc hciattach >/dev/null 2>&1
+			msg_starting "Bluetooth SDP"
+			daemon /usr/sbin/sdpd
+			RETVAL=$?
+			if [ $RETVAL -ne 0 ]; then
+				killproc hcid >/dev/null 2>&1
+				if [ "$UART_CONF" != "no" ]; then
+					killproc hciattach >/dev/null 2>&1
+				fi
 			fi
-		    fi
 		fi
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/bluetooth
 	else
@@ -52,19 +52,19 @@ case "$1" in
 		msg_already_running Bluetooth
 		exit 1
 	fi
-        ;;
+	;;
   stop)
 	if [ -f /var/lock/subsys/bluetooth ]; then
 		if [ -x /usr/sbin/sdpd ]; then
-		    msg_stopping "Bluetooth SDP"
-		    killproc sdpd
+			msg_stopping "Bluetooth SDP"
+			killproc sdpd
 		fi
 		# show "Stopping %s service" Bluetooth
 		msg_stopping Bluetooth
 		killproc hcid
 		RETVAL=$?
 		if [ "$UART_CONF" != "no" ]; then
-		    killproc hciattach >/dev/null 2>&1
+			killproc hciattach >/dev/null 2>&1
 		fi
 		rm -f /var/lock/subsys/bluetooth
 	else
@@ -98,8 +98,8 @@ case "$1" in
 	RETVAL=$?
         ;;
   *)
-        # show "Usage: %s {start|stop|status|restart|reload|force-reload}" $0
-	msg_usage "$0 {start|stop|status|restart|reload|force-reload}"
+        # show "Usage: %s {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|status|restart|reload|force-reload|status}"
         exit 1
 esac
 
