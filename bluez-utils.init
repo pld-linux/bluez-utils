@@ -81,10 +81,8 @@ case "$1" in
 	if [ -f /var/lock/subsys/bluetooth ]; then
 		# show "Reload %s service" Bluetooth
 		msg_reloading Bluetooth
-		busy
 		killproc hcid -HUP
 		RETVAL=$?
-		[ $RETVAL -eq 0 ] && ok || died
 	else
 		# show "%s service is not running." Bluetooth
 		msg_not_running Bluetooth
