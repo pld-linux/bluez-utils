@@ -4,29 +4,32 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.8
+Version:	2.10
 Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	dd698b6ec2b5a4aee707b4984ab02cf8
+# Source0-md5:	4f936b90e32eb24904dea70bd0a464f0
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
-Patch0:		%{name}-opt.patch
-Patch1:		%{name}-etc_dir.patch
-Patch2:		%{name}-cups.patch
+Patch0:		%{name}-etc_dir.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.8-2
+BuildRequires:	bluez-libs-devel >= 2.10
+BuildRequires:	dbus-devel
 BuildRequires:	libtool
+BuildRequires:	libusb-devel
 PreReq:		rc-scripts
-Requires:	bluez-libs >= 2.8-2
+Requires:	bluez-libs >= 2.10
 Obsoletes:	blues-pan
 Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+# currently lib, not %{_lib} (see cups.spec)
+%define		cupsdir		/usr/lib/cups/backend
 
 %description
 Bluetooth utilities:
@@ -54,7 +57,7 @@ Narzêdzia Bluetooth:
 Summary:	Bluetooth backend for CUPS
 Summary(pl):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 2.7
+Requires:	bluez-libs >= 2.10
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -79,13 +82,6 @@ Skrypt init dla podsystemu Bluetooth.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-# fix path (default prefix was /)
-sed -e "s@pin_helper.*bluepin;@pin_helper %{_bindir}/bluepin;@" \
-	hcid/hcid.conf > hcid.conf.tmp
-mv -f hcid.conf.tmp hcid/hcid.conf
 
 %build
 %{__libtoolize}
@@ -93,16 +89,20 @@ mv -f hcid.conf.tmp hcid/hcid.conf
 %{__autoconf}
 %{__automake}
 %configure \
+	--enable-bcm203x \
+	--enable-cups \
 	--enable-pcmcia \
 	--with-cups=/usr
-%{__make}
+%{__make} \
+	cupsdir=%{cupsdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	cupsdir=%{cupsdir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
@@ -135,6 +135,8 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/bluetooth
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/bluetooth/*
+%attr(755,root,root) %{_sysconfdir}/hotplug/usb/bcm203x
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/hotplug/usb/bcm203x.usermap
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth
 
