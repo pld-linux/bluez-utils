@@ -5,7 +5,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	2.11
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
@@ -25,7 +25,7 @@ BuildRequires:	libusb-devel
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
 PreReq:		rc-scripts
 Requires:	bluez-libs >= 2.11
-Obsoletes:	blues-pan
+Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
 Conflicts:	bluez-bluefw
 ExcludeArch:	s390 s390x
