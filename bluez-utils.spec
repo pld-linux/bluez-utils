@@ -7,7 +7,8 @@ Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-etc_dir.patch
+Patch0:		%{name}-opt.patch
+Patch1:		%{name}-etc_dir.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -42,12 +43,13 @@ Narzêdzia Bluetooth (bluez-utils):
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
 %{__aclocal}
-%{__automake}
 %{__autoconf}
+%{__automake}
 %configure \
 	--enable-pcmcia
 %{__make}
