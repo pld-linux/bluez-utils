@@ -1,0 +1,8 @@
+# Customized settings for Bluetooth
+
+# Define nice level for Bluetooth services
+SERVICE_RUN_NICE_LEVEL="+0"
+
+# remove if you have serial Bluetooth dongles configured in /etc/bluetooth/uart
+# (alternatively you can pass uart configuration file path here)
+UART_CONF="no"
