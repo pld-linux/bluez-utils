@@ -6,7 +6,7 @@ Release:	3
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-Patch0:		%{name}-home_etc.patch
+Patch0:		%{name}-etc_dir.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
