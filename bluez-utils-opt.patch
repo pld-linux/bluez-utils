@@ -1,0 +1,11 @@
+--- bluez-utils-2.3/configure.in.orig	Thu Mar 20 07:28:26 2003
++++ bluez-utils-2.3/configure.in	Tue Apr 15 13:58:05 2003
+@@ -16,8 +16,6 @@
+ AC_SUBST(DISTRO)
+ AC_SUBST(PCMCIA)
+ 
+-CFLAGS="-Wall -g -O2"
+-
+ AC_PREFIX_DEFAULT()
+ 
+ dnl Check for programs.
