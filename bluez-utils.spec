@@ -4,12 +4,12 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.7
-Release:	2
+Version:	2.8
+Release:	1
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	5b67e008efa785175cdbc3c8dcdebab2
+# Source0-md5:	dd698b6ec2b5a4aee707b4984ab02cf8
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-opt.patch
@@ -19,10 +19,10 @@ URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.7
+BuildRequires:	bluez-libs-devel >= 2.8-2
 BuildRequires:	libtool
 PreReq:		rc-scripts
-Requires:	bluez-libs >= 2.7
+Requires:	bluez-libs >= 2.8-2
 Obsoletes:	blues-pan
 Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
