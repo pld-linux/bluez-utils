@@ -5,7 +5,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	2.7
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
@@ -22,14 +22,13 @@ BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 2.7
 BuildRequires:	libtool
 PreReq:		rc-scripts
-Requires(post,preun):	/sbin/chkconfig
 Requires:	bluez-libs >= 2.7
 Obsoletes:	bluez-sdp
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Bluetooth utilities (bluez-utils):
+Bluetooth utilities:
  - hcitool
  - hciattach
  - hciconfig
@@ -41,7 +40,7 @@ Bluetooth utilities (bluez-utils):
 The BLUETOOTH trademarks are owned by Bluetooth SIG, Inc., U.S.A.
 
 %description -l pl
-Narzêdzia Bluetooth (bluez-utils):
+Narzêdzia Bluetooth:
  - hcitool
  - hciattach
  - hciconfig
@@ -62,6 +61,19 @@ Bluetooth backend for CUPS.
 
 %description -n cups-backend-bluetooth -l pl
 Backend Bluetooth dla CUPS-a.
+
+%package init
+Summary:	Init script for Bluetooth subsystem
+Summary(pl):	Skrypt init dla podsystemu Bluetooth
+Group:		Applications/System
+Requires:	%{name} = %{epoch}:%{version}
+Requires(post,preun):	/sbin/chkconfig
+
+%description init
+Init script for Bluetooth subsystem.
+
+%description init -l pl
+Skrypt init dla podsystemu Bluetooth.
 
 %prep
 %setup -q
@@ -97,7 +109,7 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post
+%post init
 /sbin/chkconfig --add bluetooth
 if [ -f /var/lock/subsys/bluetooth ]; then
 	/etc/rc.d/init.d/bluetooth restart >&2
@@ -105,7 +117,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/bluetooth\" to start bluetooth." >&2
 fi
 
-%postun
+%postun init
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/bluetooth ]; then
 		/etc/rc.d/init.d/bluetooth stop 1>&2
@@ -119,7 +131,6 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man*/*
-%attr(754,root,root) /etc/rc.d/init.d/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/bluetooth
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/bluetooth/*
@@ -129,3 +140,7 @@ fi
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_prefix}/lib/cups/backend/bluetooth
+
+%files init
+%defattr(644,root,root,755)
+%attr(754,root,root) /etc/rc.d/init.d/bluetooth
