@@ -1,0 +1,21 @@
+--- bluez-utils-2.6/sdpd/Makefile.am.orig	2004-04-02 03:21:04.000000000 +0200
++++ bluez-utils-2.6/sdpd/Makefile.am	2004-04-11 15:38:15.699478688 +0200
+@@ -6,6 +6,8 @@
+ 
+ sdpd_SOURCES = main.c request.c service.c cstate.c servicedb.c sdpd.h
+ 
++sdpd_LDADD = -lsdp
++
+ man_MANS = sdpd.8
+ 
+ EXTRA_DIST = $(man_MANS)
+--- bluez-utils-2.6/tools/Makefile.am.orig	2004-04-02 03:21:04.000000000 +0200
++++ bluez-utils-2.6/tools/Makefile.am	2004-04-11 15:37:34.236781976 +0200
+@@ -12,4 +12,7 @@
+ 
+ noinst_PROGRAMS	= ppporc
+ 
++sdptool_LDADD = -lsdp
++ciptool_LDADD = -lsdp
++
+ EXTRA_DIST = $(man_MANS)
