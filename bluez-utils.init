@@ -19,6 +19,7 @@ if [ "$UART_CONF" != "no" -a ! -f "$UART_CONF" ]; then
 	UART_CONF="no"
 fi
 
+RETVAL=0
 # See how we were called.
 case "$1" in
   start)
@@ -50,7 +51,6 @@ case "$1" in
 	else
 		# show "%s service is already running." Bluetooth
 		msg_already_running Bluetooth
-		exit 1
 	fi
 	;;
   stop)
@@ -70,14 +70,14 @@ case "$1" in
 	else
 		# show "%s service is not running." Bluetooth
 		msg_not_running Bluetooth
-		exit 1
 	fi	
 	;;
   restart)
 	$0 stop
 	$0 start
+	exit $?
 	;;
-  reload)
+  reload|force-reload)
 	if [ -f /var/lock/subsys/bluetooth ]; then
 		# show "Reload %s service" Bluetooth
 		msg_reloading Bluetooth
@@ -86,12 +86,8 @@ case "$1" in
 	else
 		# show "%s service is not running." Bluetooth
 		msg_not_running Bluetooth
-		RETVAL=1
+		RETVAL=7
 	fi
-	;;
-  force-reload)
-	# if program allows reloading without stopping
-	$0 reload
 	;;
   status)
 	status hcid
@@ -100,7 +96,7 @@ case "$1" in
   *)
 	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
-	exit 1
+	exit 3
 esac
 
 exit $RETVAL
