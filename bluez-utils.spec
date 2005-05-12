@@ -19,7 +19,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 2.15
-BuildRequires:	dbus-devel
+BuildRequires:	dbus-devel < 0.30
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
