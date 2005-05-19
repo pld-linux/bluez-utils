@@ -5,7 +5,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	2.17
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
@@ -14,12 +14,14 @@ Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-etc_dir.patch
+Patch1:		%{name}-dbus.patch
+Patch2:		%{name}-dbuslate.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 2.15
-BuildRequires:	dbus-devel < 0.30
+BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
@@ -85,6 +87,8 @@ Skrypt init dla podsystemu Bluetooth.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
