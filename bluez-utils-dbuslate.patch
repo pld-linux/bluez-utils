@@ -1,0 +1,22 @@
+--- bluez-utils-2.15/hcid/main.c~	2005-02-01 00:13:02.000000000 +0000
++++ bluez-utils-2.15/hcid/main.c	2005-03-03 15:44:56.000000000 +0000
+@@ -573,7 +573,6 @@ int main(int argc, char *argv[], char *e
+ #ifdef ENABLE_DBUS
+ 	if (hcid_dbus_init() == FALSE && hcid.dbus_pin_helper) {
+ 		syslog(LOG_ERR, "Unable to get on D-BUS");
+-		exit(1);
+ 	}
+ #else
+ 	if (hcid.dbus_pin_helper) {
+--- bluez-utils-2.15/hcid/dbus.c~	2005-02-01 00:13:02.000000000 +0000
++++ bluez-utils-2.15/hcid/dbus.c	2005-03-03 15:38:53.000000000 +0000
+@@ -113,6 +113,9 @@ void hcid_dbus_request_pin(int dev, stru
+ 	DBusPendingCall *pending = NULL;
+ 	struct pin_request *req;
+ 
++	if (!connection && !hcid_dbus_init())
++		goto failed;
++		
+ 	message = dbus_message_new_method_call(SERVICE_NAME, PATH_NAME,
+ 						INTERFACE_NAME, REQUEST_NAME);
+ 	if (message == NULL) {
