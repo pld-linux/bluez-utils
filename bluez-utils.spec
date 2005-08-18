@@ -1,6 +1,6 @@
 # TODO:
 # - check init script, add support for rfcomm bind on startup
-#
+# - security http://www.gentoo.org/security/en/glsa/glsa-200508-09.xml
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
