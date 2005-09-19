@@ -19,13 +19,13 @@ URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.15
+BuildRequires:	bluez-libs-devel >= 2.21
 BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
 PreReq:		rc-scripts
-Requires:	bluez-libs >= 2.15
+Requires:	bluez-libs >= 2.21
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
 Conflicts:	bluez-bluefw
@@ -61,7 +61,7 @@ Narzêdzia Bluetooth:
 Summary:	Bluetooth backend for CUPS
 Summary(pl):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 2.11
+Requires:	bluez-libs >= 2.21
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -137,13 +137,13 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man*/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/bluetooth
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %dir %{_sysconfdir}/bluetooth
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/bluetooth/*
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/*
 %attr(755,root,root) %{_sysconfdir}/hotplug/usb/bcm203x
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/hotplug/usb/bcm203x.usermap
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth.conf
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pcmcia/bluetooth
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hotplug/usb/bcm203x.usermap
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth
 
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
