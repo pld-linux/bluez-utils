@@ -25,7 +25,6 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/bluetooth ]; then
-		# show "Starting %s service" Bluetooth
 		msg_starting Bluetooth
 		if [ -f /usr/sbin/hciattach -a "$UART_CONF" != "no" ]; then
 			grep -v '^#' $UART_CONF | while read i; do
@@ -49,7 +48,6 @@ case "$1" in
 		fi
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/bluetooth
 	else
-		# show "%s service is already running." Bluetooth
 		msg_already_running Bluetooth
 	fi
 	;;
@@ -59,7 +57,6 @@ case "$1" in
 			msg_stopping "Bluetooth SDP"
 			killproc sdpd
 		fi
-		# show "Stopping %s service" Bluetooth
 		msg_stopping Bluetooth
 		killproc hcid
 		if [ "$UART_CONF" != "no" ]; then
@@ -67,7 +64,6 @@ case "$1" in
 		fi
 		rm -f /var/lock/subsys/bluetooth
 	else
-		# show "%s service is not running." Bluetooth
 		msg_not_running Bluetooth
 	fi	
 	;;
@@ -78,12 +74,10 @@ case "$1" in
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/bluetooth ]; then
-		# show "Reload %s service" Bluetooth
 		msg_reloading Bluetooth
 		killproc hcid -HUP
 		RETVAL=$?
 	else
-		# show "%s service is not running." Bluetooth
 		msg_not_running Bluetooth >&2
 		exit 7
 	fi
@@ -93,7 +87,6 @@ case "$1" in
 	exit $?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 3
 esac
