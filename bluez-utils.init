@@ -65,7 +65,7 @@ case "$1" in
 		rm -f /var/lock/subsys/bluetooth
 	else
 		msg_not_running Bluetooth
-	fi	
+	fi
 	;;
   restart)
 	$0 stop
