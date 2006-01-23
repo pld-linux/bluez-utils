@@ -4,17 +4,16 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.21
+Version:	2.25
 Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	f61b3b87177d876c4fcfaba890b049b4
+# Source0-md5:	ae3729ab5592be06ed01b973d4b3e9fe
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Patch0:		%{name}-etc_dir.patch
-Patch1:		%{name}-dbuslate.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -86,7 +85,6 @@ Skrypt init dla podsystemu Bluetooth.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
