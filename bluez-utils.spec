@@ -1,6 +1,5 @@
 # TODO:
 # - check init script, add support for rfcomm bind on startup
-# - security http://www.gentoo.org/security/en/glsa/glsa-200508-09.xml
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
@@ -18,7 +17,7 @@ URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.21
+BuildRequires:	bluez-libs-devel >= 2.25
 BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
