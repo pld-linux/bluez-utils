@@ -4,7 +4,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	2.25
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
@@ -22,8 +22,8 @@ BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
-PreReq:		rc-scripts
 Requires:	bluez-libs >= 2.21
+Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
 Conflicts:	bluez-bluefw
@@ -72,8 +72,8 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Init script for Bluetooth subsystem
 Summary(pl):	Skrypt init dla podsystemu Bluetooth
 Group:		Applications/System
-Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires(post,preun):	/sbin/chkconfig
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description init
 Init script for Bluetooth subsystem.
@@ -120,7 +120,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/bluetooth\" to start bluetooth." >&2
 fi
 
-%postun init
+%preun init
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/bluetooth ]; then
 		/etc/rc.d/init.d/bluetooth stop 1>&2
