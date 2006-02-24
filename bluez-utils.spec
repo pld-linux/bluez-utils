@@ -21,6 +21,7 @@ BuildRequires:	bluez-libs-devel >= 2.25
 BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
+BuildRequires:	rpmbuild(macros) >= 1.268
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
 Requires:	bluez-libs >= 2.21
 Requires:	rc-scripts
@@ -114,17 +115,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post init
 /sbin/chkconfig --add bluetooth
-if [ -f /var/lock/subsys/bluetooth ]; then
-	/etc/rc.d/init.d/bluetooth restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/bluetooth\" to start bluetooth." >&2
-fi
+%service bluetooth restart
 
 %preun init
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/bluetooth ]; then
-		/etc/rc.d/init.d/bluetooth stop 1>&2
-	fi
+	%service bluetooth stop
 	/sbin/chkconfig --del bluetooth
 fi
 
