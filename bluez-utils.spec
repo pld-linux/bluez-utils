@@ -102,7 +102,7 @@ Skrypt init dla podsystemu Bluetooth.
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT{/etc/udev/rules.d/70-bluetooth.rules,/lib/udev/bluetooth.sh}
+install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,/lib/udev}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
