@@ -1,0 +1,153 @@
+#!/bin/sh
+#
+# bluetooth	Bluetooth subsystem starting and stopping
+#
+# chkconfig:	345 25 90
+#
+# description:	Bluetooth subsystem
+#
+# $Id$
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+UART_CONF="/etc/bluetooth/uart"
+[ -f /etc/sysconfig/bluetooth ] && . /etc/sysconfig/bluetooth
+
+if [ "$UART_CONF" != "no" -a ! -f "$UART_CONF" ]; then
+	UART_CONF="no"
+fi
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/bluetooth ]; then
+		msg_starting bluetooth; started
+		if is_yes "${HID2HCI_ENABLE}" && [ -x /usr/sbin/hid2hci ]; then
+			msg_starting hid2hci
+			daemon /usr/sbin/hid2hci -0 -q    #be quiet
+			RETVAL=$?
+			/bin/sleep 1 # delay for hid's to be detected by hotplug
+		fi
+		
+		if is_yes "${HCID_ENABLE}" && [ -x /usr/sbin/hcid ]; then
+			msg_starting hcid
+			daemon /usr/sbin/hcid -f /etc/bluetooth/hcid.conf
+			RETVAL=$?
+		fi
+	
+		if is_yes "${SDPD_ENABLE}" && [ -x /usr/sbin/sdpd ]; then
+			msg_starting sdpd
+			daemon /usr/sbin/sdpd
+			RETVAL=$?
+		fi
+		
+		if is_yes "${HIDD_ENABLE}" && [ -x /usr/bin/hidd ]; then
+			msg_starting hidd
+			daemon /usr/bin/hidd ${HIDD_OPTIONS} --server
+			RETVAL=$?
+		fi
+
+		if is_yes "${RFCOMM_ENABLE}" && [ -x /usr/bin/rfcomm ]; then
+			msg_starting rfcomm
+			daemon /usr/bin/rfcomm -f /etc/bluetooth/rfcomm.conf bind all
+			RETVAL=$?
+		fi
+	
+		if is_yes "${DUND_ENABLE}" && [ -x /usr/bin/dund ]; then
+			msg_starting dund
+			daemon /usr/bin/dund ${DUND_OPTIONS}
+			RETVAL=$?
+		fi
+	
+		if is_yes "${PAND_ENABLE}" && [ -x /usr/bin/pand ]; then
+			msg_starting pand
+			daemon /usr/bin/pand ${PAND_OPTIONS}
+			RETVAL=$?
+		fi
+
+		if [ -f /usr/sbin/hciattach -a "$UART_CONF" != "no" ]; then
+			grep -v '^#' $UART_CONF | while read i; do
+				/usr/sbin/hciattach $i
+			done
+		fi
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/bluetooth
+	else
+		msg_already_running bluetooth
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/bluetooth ]; then
+		if is_yes "${PAND_ENABLE}" && [ -x /usr/bin/pand ]; then
+			msg_stopping pand
+			killproc /usr/bin/pand
+		fi
+
+		if is_yes "${DUND_ENABLE}" && [ -x /usr/bin/dund ]; then
+			msg_stopping dund
+			killproc /usr/bin/dund
+		fi
+
+		if is_yes "${RFCOMM_ENABLE}" && [ -x /usr/bin/rfcomm ]; then
+			msg_stopping rfcomm
+			daemon /usr/bin/rfcomm release all
+		fi
+
+		if is_yes "${HIDD_ENABLE}" && [ -x  /usr/bin/hidd ]; then
+			msg_stopping hidd
+			killproc /usr/bin/hidd
+		fi
+	
+		if is_yes "${SDPD_ENABLE}" && [ -x /usr/sbin/sdpd ]; then
+			msg_stopping sdpd
+			killproc /usr/sbin/sdpd
+		fi
+	
+		if is_yes "${HCID_ENABLE}" && [ -x /usr/sbin/hcid ]; then
+			msg_stopping hcid
+			daemon /usr/sbin/hcid
+		fi
+
+		if [ "$UART_CONF" != "no" ]; then
+			killproc hciattach >/dev/null 2>&1
+		fi
+		rm -f /var/lock/subsys/bluetooth
+	else
+		msg_not_running bluetooth
+	fi
+	;;
+  restart)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  reload|force-reload)
+	if [ -f /var/lock/subsys/bluetooth ]; then
+		msg_reloading hcid
+		killproc hcid -HUP
+		RETVAL=$?
+	else
+		msg_not_running bluetooth >&2
+		exit 7
+	fi
+	;;
+  status)
+	is_yes "${HID2HCI_ENABLE}" && status hid2hci
+	is_yes "${HCID_ENABLE}" && status hcid
+	is_yes "${SDPD_ENABLE}" && status sdpd
+	is_yes "${HIDD_ENABLE}" && status hidd
+	is_yes "${DUND_ENABLE}" && status dund
+	exit $?
+	;;
+  *)
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4
