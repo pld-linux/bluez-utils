@@ -6,3 +6,14 @@ SERVICE_RUN_NICE_LEVEL="+0"
 # remove if you have serial Bluetooth dongles configured in /etc/bluetooth/uart
 # (alternatively you can pass uart configuration file path here)
 UART_CONF="no"
+
+#HID2HCI_ENABLE=yes
+HCID_ENABLE=yes
+SDPD_ENABLE=yes
+HIDD_ENABLE=yes
+#HIDD_OPTIONS=""
+RFCOMM_ENABLE=yes
+#DUND_ENABLE=yes
+#DUND_OPTIONS=""
+#PAND_ENABLE=yes
+#PAND_OPTIONS=""
