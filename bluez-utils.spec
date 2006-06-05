@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	2.25
-Release:	3
+Release:	4
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
@@ -13,6 +13,8 @@ Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
 Source4:	%{name}-udev.script
 Patch0:		%{name}-etc_dir.patch
+Patch1:		%{name}-invalid-timeval.patch
+Patch2:		%{name}-poll-timeout.patch
 URL:		http://bluez.sourceforge.net/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -85,6 +87,8 @@ Skrypt init dla podsystemu Bluetooth.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -136,9 +140,10 @@ fi
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/*
 %attr(755,root,root) %{_sysconfdir}/hotplug/usb/bcm203x
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hotplug/usb/bcm203x.usermap
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth.conf
 
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
