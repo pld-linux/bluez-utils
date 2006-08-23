@@ -143,6 +143,7 @@ fi
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/70-bluetooth.rules
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/71-bluetooth.rules
 
+%dir /etc/bluetooth
 %dir /etc/sysconfig/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/*
