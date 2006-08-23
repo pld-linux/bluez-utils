@@ -1,34 +1,33 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	2.25
-Release:	4
+Version:	3.3
+Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	ae3729ab5592be06ed01b973d4b3e9fe
+# Source0-md5:	5868bd9d939fe5df769df7f9f4ca2e7e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
 Source4:	%{name}-udev.script
 Patch0:		%{name}-etc_dir.patch
-Patch1:		%{name}-invalid-timeval.patch
-Patch2:		%{name}-poll-timeout.patch
-URL:		http://bluez.sourceforge.net/
+URL:		http://www.bluez.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 2.25
+BuildRequires:	bluez-libs-devel >= 3.3
 BuildRequires:	dbus-devel >= 0.33
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 # alsa-lib-devel, openobex-devel - currently only checked for, not used
-Requires:	bluez-libs >= 2.21
+Requires:	bluez-libs >= 3.3
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
+Obsoletes:	bluez-utils-init
 Conflicts:	bluez-bluefw
 ExcludeArch:	s390 s390x
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -87,8 +86,6 @@ Skrypt init dla podsystemu Bluetooth.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %{__libtoolize}
@@ -96,9 +93,8 @@ Skrypt init dla podsystemu Bluetooth.
 %{__autoconf}
 %{__automake}
 %configure \
-	--enable-bcm203x \
 	--enable-cups \
-	--enable-pcmcia \
+	--enable-pcmciarules \
 	--with-cups=/usr
 %{__make} \
 	cupsdir=%{cupsdir}
@@ -110,12 +106,16 @@ install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,/lib/udev}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	cupsdir=%{cupsdir}
+	cupsdir=%{cupsdir} \
+	udevdir=/lib/udev
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/udev/rules.d/70-bluetooth.rules
 install %{SOURCE4} $RPM_BUILD_ROOT/lib/udev/bluetooth.sh
+
+mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
+	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -136,21 +136,18 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %{_mandir}/man*/*
+
+%attr(754,root,root) /etc/rc.d/init.d/bluetooth
+%attr(755,root,root) /lib/udev/bluetooth.sh
+%attr(755,root,root) /lib/udev/bluetooth_serial
+%config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/70-bluetooth.rules
+%config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/71-bluetooth.rules
+
+%dir /etc/sysconfig/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
-%dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/*
-%attr(755,root,root) %{_sysconfdir}/hotplug/usb/bcm203x
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/*
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/hotplug/usb/bcm203x.usermap
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/pcmcia/bluetooth.conf
 
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_prefix}/lib/cups/backend/bluetooth
-
-%files init
-%defattr(644,root,root,755)
-%attr(754,root,root) /etc/rc.d/init.d/bluetooth
-%attr(755,root,root) /lib/udev/bluetooth.sh
-%config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/70-bluetooth.rules
