@@ -6,6 +6,7 @@ Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
+#Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
 # Source0-md5:	5868bd9d939fe5df769df7f9f4ca2e7e
 Source1:	%{name}.init
@@ -18,11 +19,16 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 3.3
-BuildRequires:	dbus-devel >= 0.33
+BuildRequires:	dbus-glib-devel >= 0.35
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
-# alsa-lib-devel, openobex-devel - currently only checked for, not used
+# for future use (ALSA plugins not finished)
+#BuildRequires:	alsa-lib-devel >= 0.9
+# for future use (fuse module is just testing stub now)
+#BuildRequires:	libfuse-devel
+#BuildRequires:	openobex-devel >= 1.1
 Requires:	bluez-libs >= 3.3
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
@@ -93,7 +99,10 @@ Skrypt init dla podsystemu Bluetooth.
 %{__autoconf}
 %{__automake}
 %configure \
+	--enable-avctrl \
+	--enable-bccmd \
 	--enable-cups \
+	--enable-dfutool \
 	--enable-pcmciarules \
 	--with-cups=/usr
 %{__make} \
