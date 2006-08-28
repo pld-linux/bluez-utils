@@ -18,7 +18,7 @@ URL:		http://www.bluez.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.3
+BuildRequires:	bluez-libs-devel >= 3.4
 BuildRequires:	dbus-glib-devel >= 0.35
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
@@ -67,7 +67,7 @@ Narzêdzia Bluetooth:
 Summary:	Bluetooth backend for CUPS
 Summary(pl):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 2.21
+Requires:	bluez-libs >= 3.4
 Requires:	cups
 
 %description -n cups-backend-bluetooth
