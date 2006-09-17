@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
-Version:	3.4
+Version:	3.5
 Release:	1
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	f63b440396baee7dee9259395a205d48
+# Source0-md5:	1816753771a9949e0589a3e8631d46b5
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -18,7 +18,7 @@ URL:		http://www.bluez.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.4
+BuildRequires:	bluez-libs-devel >= 3.5
 BuildRequires:	dbus-glib-devel >= 0.35
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
@@ -29,7 +29,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 # for future use (fuse module is just testing stub now)
 #BuildRequires:	libfuse-devel
 #BuildRequires:	openobex-devel >= 1.1
-Requires:	bluez-libs >= 3.4
+Requires:	bluez-libs >= 3.5
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -67,7 +67,7 @@ Narzêdzia Bluetooth:
 Summary:	Bluetooth backend for CUPS
 Summary(pl):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.4
+Requires:	bluez-libs >= 3.5
 Requires:	cups
 
 %description -n cups-backend-bluetooth
