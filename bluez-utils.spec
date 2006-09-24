@@ -122,7 +122,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/udev/rules.d/70-bluetooth.rules
 install %{SOURCE4} $RPM_BUILD_ROOT/lib/udev/bluetooth.sh
-
+install hcid/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
 mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
