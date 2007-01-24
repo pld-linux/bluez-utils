@@ -147,7 +147,11 @@ case "$1" in
 	is_yes "${SDPD_ENABLE}" && status sdpd
 	is_yes "${HIDD_ENABLE}" && status hidd
 	is_yes "${DUND_ENABLE}" && status dund
-	exit $?
+	if [ -f /var/lock/subsys/bluetooth ]; then
+		exit 0
+	else
+		exit 1
+	fi		
 	;;
   *)
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
