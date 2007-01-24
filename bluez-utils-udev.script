@@ -15,11 +15,11 @@ if [ "$sysfs" = "" ]; then
 fi
 
 if [ ! -d $sysfs/class/bluetooth/hci[0-9]* ]; then
-    if $script --quiet status; then
+    if $script status; then
 	$script stop
     fi
 else
-    if ! $script --quiet status; then
+    if ! $script status; then
 	$script start
     fi
 fi
