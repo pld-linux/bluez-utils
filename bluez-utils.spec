@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl):	Narzêdzia Bluetooth
 Name:		bluez-utils
 Version:	3.7
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2
 Group:		Applications/System
