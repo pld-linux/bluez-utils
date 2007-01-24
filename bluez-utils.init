@@ -106,7 +106,7 @@ stop() {
 	
 		if is_yes "${HCID_ENABLE}" && [ -x /usr/sbin/hcid ]; then
 			msg_stopping hcid
-			daemon /usr/sbin/hcid
+			killproc /usr/sbin/hcid
 		fi
 
 		if [ "$UART_CONF" != "no" ]; then
