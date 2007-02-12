@@ -1,5 +1,5 @@
 Summary:	Bluetooth utilities
-Summary(pl):	Narzêdzia Bluetooth
+Summary(pl.UTF-8):   NarzÄ™dzia Bluetooth
 Name:		bluez-utils
 Version:	3.7
 Release:	2
@@ -53,8 +53,8 @@ Bluetooth utilities:
 
 The BLUETOOTH trademarks are owned by Bluetooth SIG, Inc., U.S.A.
 
-%description -l pl
-Narzêdzia Bluetooth:
+%description -l pl.UTF-8
+NarzÄ™dzia Bluetooth:
  - hcitool
  - hciattach
  - hciconfig
@@ -65,7 +65,7 @@ Narzêdzia Bluetooth:
 
 %package -n cups-backend-bluetooth
 Summary:	Bluetooth backend for CUPS
-Summary(pl):	Backend Bluetooth dla CUPS-a
+Summary(pl.UTF-8):   Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
 Requires:	bluez-libs >= 3.7
 Requires:	cups
@@ -73,12 +73,12 @@ Requires:	cups
 %description -n cups-backend-bluetooth
 Bluetooth backend for CUPS.
 
-%description -n cups-backend-bluetooth -l pl
+%description -n cups-backend-bluetooth -l pl.UTF-8
 Backend Bluetooth dla CUPS-a.
 
 %package init
 Summary:	Init script for Bluetooth subsystem
-Summary(pl):	Skrypt init dla podsystemu Bluetooth
+Summary(pl.UTF-8):   Skrypt init dla podsystemu Bluetooth
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
@@ -86,7 +86,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 %description init
 Init script for Bluetooth subsystem.
 
-%description init -l pl
+%description init -l pl.UTF-8
 Skrypt init dla podsystemu Bluetooth.
 
 %prep
