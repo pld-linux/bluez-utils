@@ -1,5 +1,5 @@
 Summary:	Bluetooth utilities
-Summary(pl.UTF-8):   Narzędzia Bluetooth
+Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.7
 Release:	2
@@ -65,7 +65,7 @@ Narzędzia Bluetooth:
 
 %package -n cups-backend-bluetooth
 Summary:	Bluetooth backend for CUPS
-Summary(pl.UTF-8):   Backend Bluetooth dla CUPS-a
+Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
 Requires:	bluez-libs >= 3.7
 Requires:	cups
@@ -78,7 +78,7 @@ Backend Bluetooth dla CUPS-a.
 
 %package init
 Summary:	Init script for Bluetooth subsystem
-Summary(pl.UTF-8):   Skrypt init dla podsystemu Bluetooth
+Summary(pl.UTF-8):	Skrypt init dla podsystemu Bluetooth
 Group:		Applications/System
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name} = %{epoch}:%{version}-%{release}
