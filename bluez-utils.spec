@@ -1,35 +1,37 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.11
+Version:	3.12
 Release:	1
 Epoch:		0
-License:	GPL v2
+License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	703fed8e09e25b5e1f01be337576e343
+# Source0-md5:	ce95f814d65390c5b8221b74381a0f9a
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
 Source4:	%{name}-udev.script
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.bluez.org/
-BuildRequires:	autoconf
+BuildRequires:	alsa-lib-devel >= 1.0.10-1
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.7
-BuildRequires:	dbus-glib-devel >= 0.35
+BuildRequires:	bluez-libs-devel >= 3.12
+BuildRequires:	dbus-glib-devel >= 0.60
+BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	hal-devel >= 0.5.8
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.268
-# for future use (ALSA plugins not finished)
-#BuildRequires:	alsa-lib-devel >= 0.9
-# for future use (fuse module is just testing stub now)
-#BuildRequires:	libfuse-devel
+# used only by noinst bluetoothd-service-sync
+#BuildRequires: libopensync-devel
+# used only by noinst bluetoothd-service-transfer
 #BuildRequires:	openobex-devel >= 1.1
-Requires:	bluez-libs >= 3.7
+Requires:	bluez-libs >= 3.12
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -63,11 +65,27 @@ Narzędzia Bluetooth:
  - skrypty startowe (PLD)
  - pliki konfiguracji PCMCIA
 
+Znaki towarowe BLUETOOTH są własnością Bluetooth SIG, Inc. z USA.
+
+%package -n alsa-plugins-bluetooth
+Summary:	ALSA plugins for Bluetooth audio devices
+Summary(pl.UTF-8):	Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth
+Group:		Libraries
+# bluetoothd + audio service
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	alsa-lib >= 1.0.10-1
+
+%description -n alsa-plugins-bluetooth
+ALSA plugins for Bluetooth audio devices.
+
+%description -n alsa-plugins-bluetooth -l pl.UTF-8
+Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
+
 %package -n cups-backend-bluetooth
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.7
+Requires:	bluez-libs >= 3.12
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -75,19 +93,6 @@ Bluetooth backend for CUPS.
 
 %description -n cups-backend-bluetooth -l pl.UTF-8
 Backend Bluetooth dla CUPS-a.
-
-%package init
-Summary:	Init script for Bluetooth subsystem
-Summary(pl.UTF-8):	Skrypt init dla podsystemu Bluetooth
-Group:		Applications/System
-Requires(post,preun):	/sbin/chkconfig
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description init
-Init script for Bluetooth subsystem.
-
-%description init -l pl.UTF-8
-Skrypt init dla podsystemu Bluetooth.
 
 %prep
 %setup -q
@@ -97,13 +102,18 @@ Skrypt init dla podsystemu Bluetooth.
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure \
+	--enable-audio \
 	--enable-avctrl \
 	--enable-bccmd \
 	--enable-cups \
 	--enable-dfutool \
+	--enable-glib \
+	--enable-network \
 	--enable-pcmciarules \
+	--enable-serial \
 	--with-cups=/usr
 %{__make} \
 	cupsdir=%{cupsdir}
@@ -126,14 +136,16 @@ install daemon/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
 mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/*.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post init
+%post
 /sbin/chkconfig --add bluetooth
 %service bluetooth restart
 
-%preun init
+%preun
 if [ "$1" = "0" ]; then
 	%service bluetooth stop
 	/sbin/chkconfig --del bluetooth
@@ -141,22 +153,33 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README audio/audio-api.txt daemon/hal-namespace.txt hcid/dbus-api.txt input/input-api.txt network/network-api.txt serial/serial-api.txt
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
-%{_mandir}/man*/*
-
+%dir %{_libdir}/bluetooth
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-audio
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-network
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
+%dir %{_sysconfdir}/bluetooth
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
+%{_sysconfdir}/bluetooth/audio.service
+%{_sysconfdir}/bluetooth/network.service
+%{_sysconfdir}/bluetooth/serial.service
 %attr(754,root,root) /etc/rc.d/init.d/bluetooth
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
 %attr(755,root,root) /lib/udev/bluetooth.sh
 %attr(755,root,root) /lib/udev/bluetooth_serial
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/70-bluetooth.rules
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/71-bluetooth.rules
+%{_mandir}/man[18]/*
+%{_mandir}/man5/hcid.conf.5*
 
-%dir /etc/bluetooth
-%dir /etc/sysconfig/bluetooth
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/*
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/*
+%files -n alsa-plugins-bluetooth
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_ctl_bluetooth.so
+%attr(755,root,root) %{_libdir}/alsa-lib/libasound_module_pcm_bluetooth.so
 
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
