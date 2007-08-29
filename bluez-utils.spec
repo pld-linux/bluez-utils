@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.13
+Version:	3.16
 Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	88df46a585b5823729f23adee58426d3
+# Source0-md5:	f6e5bf09d5f282671aa0abe50e700ee6
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -19,7 +19,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.13
+BuildRequires:	bluez-libs-devel >= 3.16
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	hal-devel >= 0.5.8
