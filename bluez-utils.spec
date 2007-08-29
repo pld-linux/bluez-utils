@@ -31,7 +31,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 #BuildRequires: libopensync-devel
 # used only by noinst bluetoothd-service-transfer
 #BuildRequires:	openobex-devel >= 1.1
-Requires:	bluez-libs >= 3.13
+Requires:	bluez-libs >= 3.16
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -85,7 +85,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.13
+Requires:	bluez-libs >= 3.16
 Requires:	cups
 
 %description -n cups-backend-bluetooth
