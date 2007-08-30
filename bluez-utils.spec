@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.16
+Version:	3.17
 Release:	2
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	f6e5bf09d5f282671aa0abe50e700ee6
+# Source0-md5:	8c7c45c672280db11c4e2a2a445be47e
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -19,7 +19,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.16
+BuildRequires:	bluez-libs-devel >= 3.17
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
@@ -33,7 +33,7 @@ BuildRequires:	rpmbuild(macros) >= 1.268
 #BuildRequires: libopensync-devel
 # used only by noinst bluetoothd-service-transfer
 #BuildRequires:	openobex-devel >= 1.1
-Requires:	bluez-libs >= 3.16
+Requires:	bluez-libs >= 3.17
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -87,7 +87,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.16
+Requires:	bluez-libs >= 3.17
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -100,7 +100,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Bluetooth support for gstreamer
 Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
 Group:		Libraries
-Requires:	bluez-libs >= 3.16
+Requires:	bluez-libs >= 3.17
 Requires:	gstreamer >= 0.10
 Requires:	gstreamer-plugins-base >= 0.10
 
