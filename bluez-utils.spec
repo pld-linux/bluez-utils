@@ -97,7 +97,7 @@ Backend Bluetooth dla CUPS-a.
 
 %package -n gstreamer-bluetooth
 Summary:        Bluetooth support for gstreamer
-Summary(pl.UTF-8):      Obsługa Bluetooth dla gstreamer-a
+Summary(pl.UTF-8):      Obsługa Bluetooth dla gstreamera
 Group:          Libraries
 Requires:       bluez-libs >= 3.16
 Requires:       gstreamer
