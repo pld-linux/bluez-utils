@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.17
-Release:	2
+Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
@@ -29,10 +29,8 @@ BuildRequires:	libtool
 BuildRequires:	libusb-devel
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-# used only by noinst bluetoothd-service-sync
-#BuildRequires: libopensync-devel
-# used only by noinst bluetoothd-service-transfer
-#BuildRequires:	openobex-devel >= 1.1
+BuildRequires: libopensync-devel
+BuildRequires:	openobex-devel >= 1.1
 Requires:	bluez-libs >= 3.17
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
@@ -133,6 +131,13 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-pcmciarules \
 	--enable-serial \
 	--enable-test \
+	--enable-hid2hci \
+	--enable-usb \
+	--enable-alsa \
+	--enable-hal \
+	--enable-pcmciarules \
+	--enable-obex \
+	--enable-sync \
 	--with-cups=/usr
 
 %{__make} \
@@ -147,6 +152,11 @@ install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,/lib/udev}
 	DESTDIR=$RPM_BUILD_ROOT \
 	cupsdir=%{cupsdir} \
 	udevdir=/lib/udev
+# patch to makefile
+install transfer/bluetoothd-service-transfer $RPM_BUILD_ROOT%{_libdir}/bluetooth
+install transfer/transfer.service $RPM_BUILD_ROOT%{_sysconfdir}/bluetooth
+install sync/bluetoothd-service-sync $RPM_BUILD_ROOT%{_libdir}/bluetooth
+#
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
@@ -182,6 +192,8 @@ fi
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-network
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-input
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-transfer
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-sync
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
@@ -189,6 +201,7 @@ fi
 %{_sysconfdir}/bluetooth/audio.service
 %{_sysconfdir}/bluetooth/network.service
 %{_sysconfdir}/bluetooth/serial.service
+%{_sysconfdir}/bluetooth/transfer.service
 %attr(754,root,root) /etc/rc.d/init.d/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
