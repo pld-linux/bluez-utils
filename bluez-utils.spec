@@ -125,11 +125,14 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-cups \
 	--enable-dfutool \
 	--enable-glib \
+	--enable-gstreamer \
+	--enable-input \
 	--enable-network \
 	--enable-pcmciarules \
 	--enable-serial \
-	--enable-gstreamer \
+	--enable-test \
 	--with-cups=/usr
+
 %{__make} \
 	cupsdir=%{cupsdir}
 
@@ -175,9 +178,11 @@ fi
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-audio
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-network
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
+%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-input
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/input.service
 %{_sysconfdir}/bluetooth/audio.service
 %{_sysconfdir}/bluetooth/network.service
 %{_sysconfdir}/bluetooth/serial.service
