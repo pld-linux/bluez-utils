@@ -22,10 +22,11 @@ BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 3.16
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
+BuildRequires:	gstreamer-devel
 BuildRequires:	hal-devel >= 0.5.8
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
-BuildRequires:	pkgconfig
+BuildRequires:	pkgconfig >= 0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
 # used only by noinst bluetoothd-service-sync
 #BuildRequires: libopensync-devel
@@ -94,6 +95,19 @@ Bluetooth backend for CUPS.
 %description -n cups-backend-bluetooth -l pl.UTF-8
 Backend Bluetooth dla CUPS-a.
 
+%package -n gstreamer-bluetooth
+Summary:        Bluetooth support for gstreamer
+Summary(pl.UTF-8):      Obsługa Bluetooth dla gstreamer-a
+Group:          Libraries
+Requires:       bluez-libs >= 3.16
+Requires:       gstreamer
+
+%description -n gstreamer-bluetooth
+Bluetooth support for gstreamer.
+
+%description -n gstreamer-bluetooth -l pl.UTF-8
+Obsługa Bluetooth dla gstreamera.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -114,6 +128,7 @@ Backend Bluetooth dla CUPS-a.
 	--enable-network \
 	--enable-pcmciarules \
 	--enable-serial \
+	--enable-gstreamer \
 	--with-cups=/usr
 %{__make} \
 	cupsdir=%{cupsdir}
@@ -184,3 +199,7 @@ fi
 %files -n cups-backend-bluetooth
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_prefix}/lib/cups/backend/bluetooth
+
+%files -n gstreamer-bluetooth
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/gstreamer*/libgstbluetooth.so
