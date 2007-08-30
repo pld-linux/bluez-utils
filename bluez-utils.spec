@@ -22,11 +22,12 @@ BuildRequires:	bison
 BuildRequires:	bluez-libs-devel >= 3.16
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
-BuildRequires:	gstreamer-devel
+BuildRequires:	gstreamer-devel >= 0.10
+BuildRequires:	gstreamer-plugins-base-devel >= 0.10
 BuildRequires:	hal-devel >= 0.5.8
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
-BuildRequires:	pkgconfig >= 0.9.0
+BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
 # used only by noinst bluetoothd-service-sync
 #BuildRequires: libopensync-devel
@@ -96,11 +97,12 @@ Bluetooth backend for CUPS.
 Backend Bluetooth dla CUPS-a.
 
 %package -n gstreamer-bluetooth
-Summary:        Bluetooth support for gstreamer
-Summary(pl.UTF-8):      Obsługa Bluetooth dla gstreamera
-Group:          Libraries
-Requires:       bluez-libs >= 3.16
-Requires:       gstreamer
+Summary:	Bluetooth support for gstreamer
+Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
+Group:		Libraries
+Requires:	bluez-libs >= 3.16
+Requires:	gstreamer >= 0.10
+Requires:	gstreamer-plugins-base >= 0.10
 
 %description -n gstreamer-bluetooth
 Bluetooth support for gstreamer.
@@ -155,6 +157,7 @@ mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer*/libgstbluetooth.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
