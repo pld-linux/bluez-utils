@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.17
-Release:	2
+Version:	3.18
+Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	8c7c45c672280db11c4e2a2a445be47e
+# Source0-md5:	2b6b4d519b8f75ef3990122934e660ba
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
