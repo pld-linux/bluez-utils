@@ -25,12 +25,12 @@ BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10
 BuildRequires:	hal-devel >= 0.5.8
+#BuildRequires:	libopensync-devel < 0.30
 BuildRequires:	libtool
 BuildRequires:	libusb-devel
+BuildRequires:	openobex-devel >= 1.1
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-BuildRequires: libopensync-devel
-BuildRequires:	openobex-devel >= 1.1
 Requires:	bluez-libs >= 3.18
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
@@ -119,6 +119,7 @@ Obsługa Bluetooth dla gstreamera.
 %{__autoheader}
 %{__automake}
 %configure \
+	--enable-alsa \
 	--enable-audio \
 	--enable-avctrl \
 	--enable-bccmd \
@@ -126,18 +127,16 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-dfutool \
 	--enable-glib \
 	--enable-gstreamer \
+	--enable-hal \
+	--enable-hid2hci \
 	--enable-input \
 	--enable-network \
+	--enable-obex \
 	--enable-pcmciarules \
 	--enable-serial \
+	--disable-sync \
 	--enable-test \
-	--enable-hid2hci \
 	--enable-usb \
-	--enable-alsa \
-	--enable-hal \
-	--enable-pcmciarules \
-	--enable-obex \
-	--enable-sync \
 	--with-cups=/usr
 
 %{__make} \
@@ -152,11 +151,11 @@ install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,/lib/udev}
 	DESTDIR=$RPM_BUILD_ROOT \
 	cupsdir=%{cupsdir} \
 	udevdir=/lib/udev
-# patch to makefile
+
+# noinst
 install transfer/bluetoothd-service-transfer $RPM_BUILD_ROOT%{_libdir}/bluetooth
 install transfer/transfer.service $RPM_BUILD_ROOT%{_sysconfdir}/bluetooth
-install sync/bluetoothd-service-sync $RPM_BUILD_ROOT%{_libdir}/bluetooth
-#
+#install sync/bluetoothd-service-sync $RPM_BUILD_ROOT%{_libdir}/bluetooth
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
@@ -193,7 +192,7 @@ fi
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-input
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-transfer
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-sync
+#%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-sync
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
