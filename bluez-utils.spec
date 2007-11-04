@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.18
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
@@ -42,6 +42,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # currently lib, not %{_lib} (see cups.spec)
 %define		cupsdir		/usr/lib/cups/backend
+%define		udevdir		/%{_lib}/udev
 
 %description
 Bluetooth utilities:
@@ -140,17 +141,18 @@ Obsługa Bluetooth dla gstreamera.
 	--with-cups=/usr
 
 %{__make} \
-	cupsdir=%{cupsdir}
+	cupsdir=%{cupsdir} \
+	udevdir=%{udevdir}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
-install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,/lib/udev}
+install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,%{udevdir}}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	cupsdir=%{cupsdir} \
-	udevdir=/lib/udev
+	udevdir=%{udevdir}
 
 # noinst
 install transfer/bluetoothd-service-transfer $RPM_BUILD_ROOT%{_libdir}/bluetooth
@@ -160,7 +162,7 @@ install transfer/transfer.service $RPM_BUILD_ROOT%{_sysconfdir}/bluetooth
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/udev/rules.d/70-bluetooth.rules
-install %{SOURCE4} $RPM_BUILD_ROOT/lib/udev/bluetooth.sh
+install %{SOURCE4} $RPM_BUILD_ROOT%{udevdir}/bluetooth.sh
 install daemon/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
 mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
@@ -204,8 +206,8 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
-%attr(755,root,root) /lib/udev/bluetooth.sh
-%attr(755,root,root) /lib/udev/bluetooth_serial
+%attr(755,root,root) %{udevdir}/bluetooth.sh
+%attr(755,root,root) %{udevdir}/bluetooth_serial
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/70-bluetooth.rules
 %config(noreplace) %verify(not md5 mtime size) /etc/udev/rules.d/71-bluetooth.rules
 %{_mandir}/man[18]/*
