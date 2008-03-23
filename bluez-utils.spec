@@ -19,7 +19,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.22
+BuildRequires:	bluez-libs-devel >= 3.29
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
@@ -31,7 +31,7 @@ BuildRequires:	libusb-devel
 BuildRequires:	openobex-devel >= 1.1
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	bluez-libs >= 3.22
+Requires:	bluez-libs >= 3.29
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -86,7 +86,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.22
+Requires:	bluez-libs >= 3.29
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -99,7 +99,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Bluetooth support for gstreamer
 Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
 Group:		Libraries
-Requires:	bluez-libs >= 3.22
+Requires:	bluez-libs >= 3.29
 Requires:	gstreamer >= 0.10
 Requires:	gstreamer-plugins-base >= 0.10
 
