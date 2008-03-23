@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.22
+Version:	3.29
 Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	c183dedb12c79433adfaa102dce2b0d4
+# Source0-md5:	cace79ea11757f54671f0d86eb7a52be
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -155,8 +155,6 @@ install -d $RPM_BUILD_ROOT{/etc/udev/rules.d,%{udevdir}}
 	udevdir=%{udevdir}
 
 # noinst
-install transfer/bluetoothd-service-transfer $RPM_BUILD_ROOT%{_libdir}/bluetooth
-install transfer/transfer.service $RPM_BUILD_ROOT%{_sysconfdir}/bluetooth
 #install sync/bluetoothd-service-sync $RPM_BUILD_ROOT%{_libdir}/bluetooth
 
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
@@ -193,16 +191,15 @@ fi
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-network
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
 %attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-input
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-transfer
 #%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-sync
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/input.service
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/audio.conf
 %{_sysconfdir}/bluetooth/audio.service
 %{_sysconfdir}/bluetooth/network.service
 %{_sysconfdir}/bluetooth/serial.service
-%{_sysconfdir}/bluetooth/transfer.service
 %attr(754,root,root) /etc/rc.d/init.d/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
