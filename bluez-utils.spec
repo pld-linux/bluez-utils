@@ -134,6 +134,7 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-network \
 	--enable-obex \
 	--enable-pcmciarules \
+	--enable-sdpd \
 	--enable-serial \
 	--disable-sync \
 	--enable-test \
