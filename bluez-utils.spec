@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.29
-Release:	2
+Version:	3.30
+Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	cace79ea11757f54671f0d86eb7a52be
+# Source0-md5:	3d17bb712d243bb1b316f7e8a909fa82
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -19,7 +19,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.29
+BuildRequires:	bluez-libs-devel >= 3.30
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
@@ -31,7 +31,7 @@ BuildRequires:	libusb-devel
 BuildRequires:	openobex-devel >= 1.1
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	bluez-libs >= 3.29
+Requires:	bluez-libs >= 3.30
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -188,19 +188,11 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_libdir}/bluetooth
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-audio
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-network
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-serial
-%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-input
-#%attr(755,root,root) %{_libdir}/bluetooth/bluetoothd-service-sync
+%dir %{_libdir}/bluetooth/plugins
+%attr(755,root,root) %{_libdir}/bluetooth/plugins/*.so
 %dir %{_sysconfdir}/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/hcid.conf
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/rfcomm.conf
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/input.service
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/bluetooth/audio.conf
-%{_sysconfdir}/bluetooth/audio.service
-%{_sysconfdir}/bluetooth/network.service
-%{_sysconfdir}/bluetooth/serial.service
 %attr(754,root,root) /etc/rc.d/init.d/bluetooth
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/bluetooth
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/dbus-1/system.d/bluetooth.conf
