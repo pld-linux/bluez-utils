@@ -86,7 +86,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.29
+Requires:	bluez-libs >= 3.30
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -99,7 +99,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Bluetooth support for gstreamer
 Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
 Group:		Libraries
-Requires:	bluez-libs >= 3.29
+Requires:	bluez-libs >= 3.30
 Requires:	gstreamer >= 0.10
 Requires:	gstreamer-plugins-base >= 0.10
 
@@ -167,6 +167,7 @@ mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/alsa-lib/*.la
+rm -f $RPM_BUILD_ROOT%{_libdir}/bluetooth/plugins/*.la
 rm -f $RPM_BUILD_ROOT%{_libdir}/gstreamer*/libgstbluetooth.la
 
 %clean
