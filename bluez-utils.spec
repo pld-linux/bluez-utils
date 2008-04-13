@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.30
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
@@ -50,6 +50,7 @@ Bluetooth utilities:
  - hciattach
  - hciconfig
  - hcid
+ - hidd
  - l2ping
  - start scripts (PLD)
  - PCMCIA configuration files
@@ -62,6 +63,7 @@ Narzędzia Bluetooth:
  - hciattach
  - hciconfig
  - hcid
+ - hidd
  - l2ping
  - skrypty startowe (PLD)
  - pliki konfiguracji PCMCIA
@@ -135,6 +137,7 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-obex \
 	--enable-pcmciarules \
 	--enable-sdpd \
+	--enable-hidd \
 	--enable-serial \
 	--disable-sync \
 	--enable-test \
