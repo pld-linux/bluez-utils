@@ -52,6 +52,7 @@ Bluetooth utilities:
  - hcid
  - hidd
  - l2ping
+ - pand
  - start scripts (PLD)
  - PCMCIA configuration files
 
@@ -65,6 +66,7 @@ Narzędzia Bluetooth:
  - hcid
  - hidd
  - l2ping
+ - pand
  - skrypty startowe (PLD)
  - pliki konfiguracji PCMCIA
 
@@ -135,6 +137,7 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-input \
 	--enable-network \
 	--enable-obex \
+	--enable-pand \
 	--enable-pcmciarules \
 	--enable-sdpd \
 	--enable-hidd \
