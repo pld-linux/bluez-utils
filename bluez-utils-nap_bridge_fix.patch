@@ -1,0 +1,62 @@
+--- network/bridge.c.orig	2008-05-05 14:37:28.000000000 +0300
++++ network/bridge.c	2008-05-05 14:31:39.000000000 +0300
+@@ -53,7 +53,7 @@
+ 	if (stat("/sys/module/bridge", &st) < 0)
+ 		return -EOPNOTSUPP;
+ #endif
+-
++	info("bridge init");
+ 	bridge_socket = socket(AF_INET, SOCK_STREAM, 0);
+ 	if (bridge_socket < 0)
+ 		return -errno;
+@@ -74,7 +74,7 @@
+ {
+ 	int err;
+ 	const char *name = bridge_get_name(id);
+-
++	info("bridge create %s", name);
+ 	err = ioctl(bridge_socket, SIOCBRADDBR, name);
+ 	if (err < 0)
+ 		return -errno;
+@@ -86,7 +86,7 @@
+ {
+ 	int err;
+ 	const char *name = bridge_get_name(id);
+-
++	info("remove from bridge");
+ 	err = bnep_if_down(name);
+ 	if (err < 0)
+ 		return err;
+@@ -118,9 +118,7 @@
+ 	if (err < 0)
+ 		return err;
+ 
+-	/* Only run scripts in GN bridges */
+-	if (id != BNEP_SVC_GN)
+-		return 0;
++	info("bridge_add_interface %s", dev);
+ 
+ 	err = bnep_if_up(name, id);
+ 	if (err < 0)
+--- network/server.c.orig	2008-05-05 14:37:17.000000000 +0300
++++ network/server.c	2008-05-03 11:57:39.000000000 +0300
+@@ -665,6 +665,9 @@
+ 
+ 	if (bridge_create(BNEP_SVC_GN) < 0)
+ 		error("Can't create GN bridge");
++		
++	if (bridge_create(BNEP_SVC_NAP) < 0)
++		error("Can't create NAP bridge");
+ 
+ 	return 0;
+ fail:
+@@ -690,6 +693,9 @@
+ 
+ 	if (bridge_remove(BNEP_SVC_GN) < 0)
+ 		error("Can't remove GN bridge");
++		
++	if (bridge_remove(BNEP_SVC_NAP) < 0)
++		error("Can't remove NAP bridge");
+ 
+ 	dbus_connection_unref(connection);
+ 	connection = NULL;
