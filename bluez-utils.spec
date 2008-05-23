@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.31
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
@@ -14,6 +14,8 @@ Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
 Source4:	%{name}-udev.script
 Patch0:		%{name}-etc_dir.patch
+Patch1:		%{name}-bnep_ifup.patch
+Patch2:		%{name}-nap_bridge_fix.patch
 URL:		http://www.bluez.org/
 BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
@@ -116,6 +118,8 @@ Obsługa Bluetooth dla gstreamera.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
+%patch2 -p0
 
 %build
 %{__libtoolize}
