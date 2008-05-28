@@ -31,14 +31,13 @@ start() {
 		fi
 		
 		if is_yes "${HCID_ENABLE}" && [ -x /usr/sbin/hcid ]; then
+			HCID_FLAGS="-f /etc/bluetooth/hcid.conf"
+
+			if is_yes "${SDPD_ENABLE}" ; then
+				HCID_FLAGS="$HCID_FLAGS -s"
+			fi
 			msg_starting hcid
-			daemon /usr/sbin/hcid -f /etc/bluetooth/hcid.conf
-			RETVAL=$?
-		fi
-	
-		if is_yes "${SDPD_ENABLE}" && [ -x /usr/sbin/sdpd ]; then
-			msg_starting sdpd
-			daemon /usr/sbin/sdpd
+			daemon /usr/sbin/hcid $HCID_FLAGS
 			RETVAL=$?
 		fi
 		
@@ -97,11 +96,6 @@ stop() {
 		if is_yes "${HIDD_ENABLE}" && [ -x  /usr/bin/hidd ]; then
 			msg_stopping hidd
 			killproc /usr/bin/hidd
-		fi
-	
-		if is_yes "${SDPD_ENABLE}" && [ -x /usr/sbin/sdpd ]; then
-			msg_stopping sdpd
-			killproc /usr/sbin/sdpd
 		fi
 	
 		if is_yes "${HCID_ENABLE}" && [ -x /usr/sbin/hcid ]; then
