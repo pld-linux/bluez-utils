@@ -1,27 +1,25 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.31
-Release:	2
+Version:	3.32
+Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	a87bd1e87923ff60c5855be74f0d3f7a
+# Source0-md5:	781ad0e5b3583d90e562e408a5226da1
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
 Source4:	%{name}-udev.script
 Patch0:		%{name}-etc_dir.patch
-Patch1:		%{name}-bnep_ifup.patch
-Patch2:		%{name}-nap_bridge_fix.patch
 URL:		http://www.bluez.org/
 BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.31
+BuildRequires:	bluez-libs-devel >= 3.32
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
@@ -33,7 +31,7 @@ BuildRequires:	libusb-devel
 BuildRequires:	openobex-devel >= 1.1
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	bluez-libs >= 3.31
+Requires:	bluez-libs >= 3.32
 Requires:	rc-scripts
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
@@ -92,7 +90,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.31
+Requires:	bluez-libs >= 3.32
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -105,7 +103,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Bluetooth support for gstreamer
 Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
 Group:		Libraries
-Requires:	bluez-libs >= 3.31
+Requires:	bluez-libs >= 3.32
 Requires:	gstreamer >= 0.10
 Requires:	gstreamer-plugins-base >= 0.10
 
@@ -118,8 +116,6 @@ Obsługa Bluetooth dla gstreamera.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
-%patch2 -p0
 
 %build
 %{__libtoolize}
@@ -195,7 +191,7 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README audio/audio-api.txt daemon/hal-namespace.txt hcid/dbus-api.txt input/input-api.txt network/network-api.txt serial/serial-api.txt
+%doc AUTHORS ChangeLog README audio/audio-api.txt hcid/dbus-api.txt input/input-api.txt network/network-api.txt serial/serial-api.txt
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_sbindir}/*
 %dir %{_libdir}/bluetooth
