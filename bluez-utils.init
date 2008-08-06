@@ -70,7 +70,7 @@ start() {
 				/usr/sbin/hciattach $i
 			done
 		fi
-		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/bluetooth
+		touch /var/lock/subsys/bluetooth
 	else
 		msg_already_running bluetooth
 	fi
