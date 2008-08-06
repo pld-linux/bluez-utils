@@ -1,14 +1,14 @@
 Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
-Version:	3.32
+Version:	3.36
 Release:	1
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
 #Source0Download: http://www.bluez.org/download.html
 Source0:	http://bluez.sourceforge.net/download/%{name}-%{version}.tar.gz
-# Source0-md5:	781ad0e5b3583d90e562e408a5226da1
+# Source0-md5:	4fc292b635ba7b442c7aaf5680199012
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 Source3:	%{name}-udev.rules
@@ -168,7 +168,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/udev/rules.d/70-bluetooth.rules
 install %{SOURCE4} $RPM_BUILD_ROOT%{udevdir}/bluetooth.sh
-install daemon/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
+install test/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
 mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
