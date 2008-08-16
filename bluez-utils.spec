@@ -2,7 +2,7 @@ Summary:	Bluetooth utilities
 Summary(pl.UTF-8):	Narzędzia Bluetooth
 Name:		bluez-utils
 Version:	3.36
-Release:	1
+Release:	2
 Epoch:		0
 License:	GPL v2+
 Group:		Applications/System
@@ -33,6 +33,7 @@ BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	bluez-libs >= 3.32
 Requires:	rc-scripts
+Obsoletes:	bluez-hciemu
 Obsoletes:	bluez-pan
 Obsoletes:	bluez-sdp
 Obsoletes:	bluez-utils-init
@@ -50,6 +51,7 @@ Bluetooth utilities:
  - hciattach
  - hciconfig
  - hcid
+ - hciemu
  - hidd
  - l2ping
  - pand
@@ -64,6 +66,7 @@ Narzędzia Bluetooth:
  - hciattach
  - hciconfig
  - hcid
+ - hciemu
  - hidd
  - l2ping
  - pand
