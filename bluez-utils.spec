@@ -19,7 +19,7 @@ BuildRequires:	alsa-lib-devel >= 1.0.10-1
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	bluez-libs-devel >= 3.32
+BuildRequires:	bluez-libs-devel >= 3.36
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	glib2-devel >= 2.0
 BuildRequires:	gstreamer-devel >= 0.10
@@ -31,7 +31,7 @@ BuildRequires:	libusb-devel
 BuildRequires:	openobex-devel >= 1.1
 BuildRequires:	pkgconfig >= 1:0.9.0
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	bluez-libs >= 3.32
+Requires:	bluez-libs >= 3.36
 Requires:	rc-scripts
 Obsoletes:	bluez-hciemu
 Obsoletes:	bluez-pan
@@ -93,7 +93,7 @@ Wtyczki systemu ALSA dla urządzeń dźwiękowych Bluetooth.
 Summary:	Bluetooth backend for CUPS
 Summary(pl.UTF-8):	Backend Bluetooth dla CUPS-a
 Group:		Applications/Printing
-Requires:	bluez-libs >= 3.32
+Requires:	bluez-libs >= 3.36
 Requires:	cups
 
 %description -n cups-backend-bluetooth
@@ -106,7 +106,7 @@ Backend Bluetooth dla CUPS-a.
 Summary:	Bluetooth support for gstreamer
 Summary(pl.UTF-8):	Obsługa Bluetooth dla gstreamera
 Group:		Libraries
-Requires:	bluez-libs >= 3.32
+Requires:	bluez-libs >= 3.36
 Requires:	gstreamer >= 0.10
 Requires:	gstreamer-plugins-base >= 0.10
 
@@ -137,13 +137,13 @@ Obsługa Bluetooth dla gstreamera.
 	--enable-gstreamer \
 	--enable-hal \
 	--enable-hid2hci \
+	--enable-hidd \
 	--enable-input \
 	--enable-network \
 	--enable-obex \
 	--enable-pand \
 	--enable-pcmciarules \
 	--enable-sdpd \
-	--enable-hidd \
 	--enable-serial \
 	--disable-sync \
 	--enable-test \
@@ -171,7 +171,7 @@ install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/bluetooth
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/bluetooth
 install %{SOURCE3} $RPM_BUILD_ROOT/etc/udev/rules.d/70-bluetooth.rules
 install %{SOURCE4} $RPM_BUILD_ROOT%{udevdir}/bluetooth.sh
-install test/passkey-agent $RPM_BUILD_ROOT/%{_bindir}
+install test/passkey-agent $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT/etc/udev/bluetooth.rules \
 	$RPM_BUILD_ROOT/etc/udev/rules.d/71-bluetooth.rules
 
